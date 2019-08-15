@@ -252,7 +252,8 @@ float 			ofxWMFVideoPlayer::getDuration() {
 
 void ofxWMFVideoPlayer::setPosition(float pos)
 {
-	_player->setPosition(pos);
+	if ((_player) && (_player->GetState() != OpenPending) && (_player->GetState() != Closing) && (_player->GetState() != Closed)) 
+		_player->setPosition(pos);
 }
 
 void ofxWMFVideoPlayer::setVolume(float vol)

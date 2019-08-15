@@ -19,86 +19,86 @@ class ofxWMFVideoPlayer;
 class CPlayer;
 class ofxWMFVideoPlayer {
 
-	private:
-		static int  _instanceCount;
-		
-		
-		HWND		_hwndPlayer;
-		
-		BOOL bRepaintClient;
-		
-		
-		int _width;
-		int _height;
+private:
+	static int  _instanceCount;
 
 
-		bool _waitForLoadedToPlay;
-		bool _isLooping;
-		bool _wantToSetVolume;
-		float _currentVolume;
+	HWND		_hwndPlayer;
 
-		bool _sharedTextureCreated;
-		
-		ofTexture _tex;
-	
-		BOOL InitInstance();
-
-		
-		void                OnPlayerEvent(HWND hwnd, WPARAM pUnkPtr);
-
-		float _frameRate;
+	BOOL bRepaintClient;
 
 
+	int _width;
+	int _height;
 
-	public:
+
+	bool _waitForLoadedToPlay;
+	bool _isLooping;
+	bool _wantToSetVolume;
+	float _currentVolume;
+
+	bool _sharedTextureCreated;
+
+	ofTexture _tex;
+
+	BOOL InitInstance();
+
+
+	void                OnPlayerEvent(HWND hwnd, WPARAM pUnkPtr);
+
+	float _frameRate;
+
+
+
+public:
 	CPlayer*	_player;
 
 	int _id;
 
-	
+
 	ofxWMFVideoPlayer();
-	 ~ofxWMFVideoPlayer();
+	~ofxWMFVideoPlayer();
 
-	 bool				loadMovie(string name);
-	 //bool 				loadMovie(string name_left, string name_right) ;
-	 void				close();
-	 void				update();
-	
-	 void				play();
-	 void				stop();		
-	 void				pause();
+	bool				loadMovie(string name);
+	//bool 				loadMovie(string name_left, string name_right) ;
+	void				close();
+	void				update();
 
-	 float				getPosition();
-	 float				getDuration();
-	 float				getFrameRate();
+	void				play();
+	void				stop();
+	void				pause();
 
-	 void				setPosition(float pos);
+	float				getPosition();
+	float				getDuration();
+	float				getFrameRate();
 
-	 void				setVolume(float vol);
-	 float				getVolume();
+	void				setPosition(float pos);
 
-	 float				getHeight();
-	 float				getWidth();
+	void				setVolume(float vol);
+	float				getVolume();
 
-	 bool				isPlaying(); 
-	 bool				isStopped();
-	 bool				isPaused();
+	float				getHeight();
+	float				getWidth();
 
-	 void				setLoop(bool isLooping);
-	 bool				isLooping() { return _isLooping; }
+	bool				isPlaying();
+	bool				isStopped();
+	bool				isPaused();
 
-
-
-	
+	void				setLoop(bool isLooping);
+	bool				isLooping() { return _isLooping; }
 
 
 
 
-	void draw(int x, int y , int w, int h);
-	void draw(int x, int y) { draw(x,y,getWidth(),getHeight()); }
 
 
-	HWND getHandle() { return _hwndPlayer;}
+
+
+	void draw(int x, int y, int w, int h);
+	void draw(int x, int y) { draw(x, y, getWidth(), getHeight()); }
+
+
+	HWND getHandle() { return _hwndPlayer; }
 	LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static void forceExit();
