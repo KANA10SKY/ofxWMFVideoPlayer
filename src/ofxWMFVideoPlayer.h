@@ -87,6 +87,9 @@ public:
 	void				setLoop(bool isLooping);
 	bool				isLooping() { return _isLooping; }
 
+	bool				isMovieDone();
+
+	ofTexture &			getTexture() { return _tex; }
 
 
 

@@ -195,6 +195,10 @@ bool  ofxWMFVideoPlayer::isPaused()
 }
 
 
+bool ofxWMFVideoPlayer::isMovieDone() {
+	return _player->GetIsMovieDone();
+}
+
 
 
 void	ofxWMFVideoPlayer::close() {
@@ -357,7 +361,7 @@ LRESULT  ofxWMFVideoPlayer::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPAR
 //  Create the application window.
 BOOL ofxWMFVideoPlayer::InitInstance()
 {
-	PCWSTR szWindowClass = L"MFBASICPLAYBACK";
+	LPCSTR szWindowClass = "MFBASICPLAYBACK";
 	HWND hwnd;
 	WNDCLASSEX wcex;
 
@@ -381,7 +385,7 @@ BOOL ofxWMFVideoPlayer::InitInstance()
 
 
 	// Create the application window.
-	hwnd = CreateWindow(szWindowClass, L"", WS_OVERLAPPEDWINDOW,
+	hwnd = CreateWindow(szWindowClass, "", WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, NULL, NULL);
 
 	if (hwnd == 0)

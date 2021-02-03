@@ -105,6 +105,8 @@ public:
 	bool isLooping() { return _isLooping; }
 	void setLooping(bool isLooping) { _isLooping = isLooping; }
 
+	bool _isMovieDone;
+	bool GetIsMovieDone() { return _isMovieDone; }
 	
 	HRESULT setVolume(float vol);
 	float   getVolume() { return _currentVolume; }

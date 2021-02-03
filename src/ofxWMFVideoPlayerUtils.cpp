@@ -397,6 +397,8 @@ done:
 
     SafeRelease(&pSourcePD);
     SafeRelease(&pTopology);
+
+	_isMovieDone = false;
     return hr;
 }
 
@@ -718,27 +720,31 @@ HRESULT CPlayer::OnTopologyStatus(IMFMediaEvent *pEvent)
 HRESULT CPlayer::OnPresentationEnded(IMFMediaEvent *pEvent)
 {
 
+	m_pSession->Pause();
+	m_state = Paused;
+
+	//Create variant for seeking information
+	PROPVARIANT varStart;
+	PropVariantInit(&varStart);
+	varStart.vt = VT_I8;
+	varStart.hVal.QuadPart = 0; //i.e. seeking to the beginning
+
+	HRESULT hr = S_OK;
+	hr = m_pSession->Start(&GUID_NULL, &varStart);
+
+	if FAILED(hr)
+	{
+		ofLogError("ofxWMFVideoPlayerUtils", "Error while looping");
+	}
+	if (!_isLooping) {
 		m_pSession->Pause();
-		m_state = Paused;
+		_isMovieDone = true;
+	}
+	else m_state = Started;
 
-		//Create variant for seeking information
-		PROPVARIANT varStart;
-		PropVariantInit(&varStart);
-		varStart.vt = VT_I8;
-		varStart.hVal.QuadPart = 0; //i.e. seeking to the beginning
-		
-		HRESULT hr = S_OK;
-		hr = m_pSession->Start(&GUID_NULL,&varStart);
+	PropVariantClear(&varStart);
 
-		if FAILED(hr)
-		{
-			ofLogError("ofxWMFVideoPlayerUtils", "Error while looping");
-		}
-		if (!_isLooping) m_pSession->Pause();
-		else m_state = Started;
-		
-		PropVariantClear(&varStart);
-
+	
 	
     // The session puts itself into the stopped state automatically.
    // else m_state = Stopped;
@@ -909,6 +915,9 @@ HRESULT CPlayer::Play()
     {
         return E_UNEXPECTED;
     }
+
+	_isMovieDone = false;
+
     return StartPlayback();
 }
 
